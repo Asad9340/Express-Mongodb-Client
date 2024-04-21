@@ -2,19 +2,31 @@ import { useState } from 'react';
 import './App.css';
 import { useEffect } from 'react';
 function App() {
-  const [user, setUser] = useState([]);
+  const [users, setUsers] = useState([]);
   useEffect(() => {
     fetch('http://localhost:5000/users')
       .then(res => res.json())
-      .then(data => setUser(data));
+      .then(data => setUsers(data));
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
-    const user = { name, email }
-    console.log(user);
+    const user = { name, email };
+    fetch('http://localhost:5000/users', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        const newUsers = [...users, data];
+        setUsers(newUsers);
+      });
   };
   return (
     <>
@@ -26,7 +38,7 @@ function App() {
         <input type="submit" value="Add User" />
       </form>
       <h1>Learning Express JS</h1>
-      <p>User Number: {user.length}</p>
+      <p>User Number: {users.length}</p>
     </>
   );
 }
