@@ -8,7 +8,13 @@ import Register from './Register';
 const router = createBrowserRouter([
   {
     path: '/',
-    element:<Register/>
+    element: <Register />,
+    children: [
+      {
+        path: '/users',
+        element:<Register/>
+      }
+    ]
   },
 ]);
 
