@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 
 function Users() {
   const loadedUsers = useLoaderData();
@@ -29,7 +29,15 @@ function Users() {
             >
               <p className="text-center text-2xl font-semibold"> {user.name}</p>
               <p className="text-center">{user.email}</p>
-              <div className="text-center">
+              <p className="text-center">{user._id}</p>
+              <div className=" flex gap-4 items-center justify-center">
+                <Link to={`/update/${user._id}`}>
+                  <button
+                    className="border border-green-500 px-4 py-2 rounded-lg mt-4 hover:bg-green-500 duration-300 active:bg-green-700"
+                  >
+                    Update
+                  </button>
+                </Link>
                 <button
                   onClick={() => handleDeleteUser(user._id)}
                   className="border border-green-500 px-4 py-2 rounded-lg mt-4 hover:bg-green-500 duration-300 active:bg-green-700"
